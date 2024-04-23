@@ -1,0 +1,33 @@
+Transactions
+transactions and atomicity
+
+Distributed queries:
+https://www.mongodb.com/docs/manual/core/distributed-queries/
+Read preference - read from primary/primaryPreferred/secondary/nearest in replica set
+Write preference - writes are always directed to the primary and records the write operation in the primary's oplog(operation log). This oplog is then replicated to the secondary replicas which then apply the operations in an async manner
+
+Read concerns(read isolation levels):
+Default is read_uncommitted
+Write operations are atomic with respect to a single document; i.e. if a write is updating multiple fields in the document, a read operation will never see the document with only some of the fields updated. However, although a client may not see a partially updated document, read uncommitted means that concurrent read operations may still see the updated document before the changes are made durable.
+
+Comparison with kafka:
+readconcern : majority -> similar to the high watermark concept in kafka consumer
+Do we want to see the latest data in the replica or the data that is sucessfully replicated to the majority of the replicas in replica set?
+
+writeconcern/write acknowledgment : majority -> similar to acks in kafka producer
+w: majority -> acks=all  
+{ w: "majority" } is the default write concern for most MongoDB deployments.
+consider a replica set with 3 voting members, Primary-Secondary-Secondary (P-S-S). For this replica set, calculated majority is two, and the write must propagate to the primary and one secondary to acknowledge the write concern to the client.
+  
+w: 1 -> acks=1
+Requests acknowledgment that the write operation has propagated to the standalone mongod or the primary in a replica set.   
+
+w:0 -> acks=0
+Requests no acknowledgment of the write operation. Has the lowest latency
+  
+https://www.mongodb.com/docs/manual/faq/concurrency/
+
+  
+What do i need to follow up in our mongo cluster?
+  what is the readConcern?: majority
+  what is readPreference? guess: primaryPreferred

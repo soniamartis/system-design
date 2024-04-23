@@ -1,1 +1,5 @@
-- [ ] https://github.com/octo-org/octo-repo/issues/740
+Learn following architectures for the following:
+- Distributed cache (redis)
+- Distributed database (mongo)
+- Distributed message queue (kafka)
+

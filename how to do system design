@@ -1,8 +1,8 @@
 Steps to design a system:
-gather functional requirements - what are the functionalities that this system must support
-gather non-functional requirements - availability, scalability, performance, high concurrency, latency, thoroughput
-Back of the envelope estimations - Determine QPS(Queries per second), TPS(transactions per second), read-heavy vs write-heavy 
-API design
-Data models along with choice of DB with some pseudo-code on how the services will work
-High level design based on functional requirements - lb, api gw, message queues, breakdown of services based on apis, s2s communication protocol, client-server communication protocols
-Enhacements to high level design based on non-functional requirements
+1. gather functional requirements - what are the functionalities that this system must support
+2. gather non-functional requirements - availability, scalability, performance, high concurrency, latency, thoroughput
+3. Back of the envelope estimations - Determine QPS(Queries per second), TPS(transactions per second), read-heavy vs write-heavy 
+4. API design
+5. Data models along with choice of DB with some pseudo-code on how the services will work
+6. High level design based on functional requirements - lb, api gw, message queues, breakdown of services based on apis, s2s communication protocol, client-server communication protocols
+7. Enhancements to high level design based on non-functional requirements

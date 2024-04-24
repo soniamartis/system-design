@@ -9,11 +9,14 @@ apply those incremental changes to targets(1 or more)
 
 Different ways to implement CDC:
 database triggers: this can prove useful for smaller systems where we want to maintain audit for a particular tables
-change data streams option provided by vendr DB like change data streams in mongodb: https://www.mongodb.com/developer/languages/java/change-streams-in-java/
+change data streams option provided by vendor DB like change data streams in mongodb: https://www.mongodb.com/developer/languages/java/change-streams-in-java/
 Use open-source technologies like Debezium that have connectors
 
 NOTE:
 Debezium mongodb cnnector uses mongodb change streams under the hood to read the oplog data from the primary in the replicaSet
+
+![image](https://github.com/soniamartis/system-design/assets/12456295/c26eaa39-d91d-496e-934c-c9af5cd74bb1)
+
 
 
   

@@ -1,5 +1,5 @@
-Transactions
-transactions and atomicity
+# Transactions
+## Transactions and atomicity
 Atomicity: writing to a single document is always atomic. it is best to follow the denormalised schema while designing mongodb schemas to minimise usage 
 of transactions so that the entire document is updated atomically
 
@@ -16,8 +16,8 @@ Either all changes or no changes are applied
 Operations outside the txn will see the updated changed only when the txn commits
 If the txn rolls back, no changes will ever be visible
 
-Scenarios:
-# Stale reads inside transaction
+## Scenarios
+### Stale reads inside transaction
 Read operations inside a transaction are not guaranteed to see writes performed by other committed transactions or non-transactional writes
 - A transaction is in-progress.
 - A write outside the transaction deletes a document.
@@ -28,12 +28,12 @@ This will acquire a write lock on the document
 Now, if some other operation tries to update/delete this doc, mongo will throw a writeconflict error on the external operation
 once the txn is committed, mongo releases the lock
 
-# Reads outside transaction
+### Reads outside transaction
 During the commit for a transaction, outside read operations may try to read the same documents that will be modified by the transaction
 Outside reads that use read concern "snapshot" or "linearizable" wait until all writes of a transaction are visible.
 Outside reads using other read concerns do not wait until all writes of a transaction are visible, but instead read the before-transaction version of the documents.
 
-# Transactions and write conflicts:
+### Transactions and write conflicts
 If the current transaction updates a doc that has been updated externally before it could take a lock on that doc, then  write conflict will be thrown in current txn
 If the txn has acquired a lock on a doc, then the external operation waits till this txn completes
 
@@ -44,10 +44,10 @@ By default, transactions waits up to 5 milliseconds to acquire locks required by
 Transactions release all locks upon abort or commit.
 
 
-Distributed queries:
+### Distributed queries:
 https://www.mongodb.com/docs/manual/core/distributed-queries/
-Read preference - read from primary/primaryPreferred/secondary/nearest in replica set
-Write preference - writes are always directed to the primary and records the write operation in the primary's oplog(operation log). This oplog is then replicated to the secondary replicas which then apply the operations in an async manner
+- Read preference - read from primary/primaryPreferred/secondary/nearest in replica set
+- Write preference - writes are always directed to the primary and records the write operation in the primary's oplog(operation log). This oplog is then replicated to the secondary replicas which then apply the operations in an async manner
 
 Read concerns(read isolation levels):
 Default is read_uncommitted
@@ -74,3 +74,7 @@ https://www.mongodb.com/docs/manual/faq/concurrency/
 What do i need to follow up in our mongo cluster?
   what is the readConcern?: majority
   what is readPreference? guess: primaryPreferred
+
+
+## Synopsis
+

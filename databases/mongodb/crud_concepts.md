@@ -33,10 +33,6 @@ During the commit for a transaction, outside read operations may try to read the
 Outside reads that use read concern "snapshot" or "linearizable" wait until all writes of a transaction are visible.
 Outside reads using other read concerns do not wait until all writes of a transaction are visible, but instead read the before-transaction version of the documents.
 
-### Transactions and write conflicts
-If the current transaction updates a doc that has been updated externally before it could take a lock on that doc, then  write conflict will be thrown in current txn
-If the txn has acquired a lock on a doc, then the external operation waits till this txn completes
-
 
 Limitations:
 By default, a transaction must have a runtime of less than one minute.
@@ -49,11 +45,11 @@ https://www.mongodb.com/docs/manual/core/distributed-queries/
 - Read preference - read from primary/primaryPreferred/secondary/nearest in replica set
 - Write preference - writes are always directed to the primary and records the write operation in the primary's oplog(operation log). This oplog is then replicated to the secondary replicas which then apply the operations in an async manner
 
-Read concerns(read isolation levels):
-Default is read_uncommitted
-Write operations are atomic with respect to a single document; i.e. if a write is updating multiple fields in the document, a read operation will never see the document with only some of the fields updated. However, although a client may not see a partially updated document, read uncommitted means that concurrent read operations may still see the updated document before the changes are made durable.
+### Read concerns(read isolation levels)
+- Default is read_uncommitted
+- Write operations are atomic with respect to a single document; i.e. if a write is updating multiple fields in the document, a read operation will never see the document with only some of the fields updated. However, although a client may not see a partially updated document, read uncommitted means that concurrent read operations may still see the updated document before the changes are made durable.
 
-Comparison with kafka:
+#### Read concern comparison with kafka
 readconcern : majority -> similar to the high watermark concept in kafka consumer
 Do we want to see the latest data in the replica or the data that is sucessfully replicated to the majority of the replicas in replica set?
 
@@ -76,5 +72,14 @@ What do i need to follow up in our mongo cluster?
   what is readPreference? guess: primaryPreferred
 
 
-## Synopsis
+## Final Notes
+- All reads and writes in a transaction have to take an intent exclusive(IX) lock on the collections they are accessing
+- If the collection is already locked by an S(shared) or X lock, then the current txn will wait for default of 5 ms before failing
+
+- Write conflicts 
+![image](https://github.com/soniamartis/system-design/assets/12456295/b51c59e5-26bc-4358-99d9-2d0c6845eedf)
+
+- If a write conflict is thrown in a txn, then it has to be programatically retried, mongo will not retry automatically
+- If a write conflict is thrown on a write operation that is not within txn, then it will be automatically retried till it succeeds
+- To emulate the SELECT .. FOR UPDATE behaviour, we need to use findAndModify that will take a write lock on a document, so that it is not accessible to other operations and it will throw a write conflict in external operations
 

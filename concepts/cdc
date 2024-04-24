@@ -1,0 +1,15 @@
+Change Data Capture
+
+CDC is a set of technologies/ processes that identify the changes in the source DB and apply those changes to the target
+Usecases:
+can be used for implementing replication of datasets/ copying the data from one kind of DB to another
+eg: read data from sybase and write it to datalake(HDFS files)
+Instead of running batch scripts and scheduling them to run at certain intervals of time(can be very long running based on source), we can use CDC to detect changes in the source DB and 
+apply those incremental changes to targets(1 or more)
+
+Different ways to implement CDC:
+database triggers: this can prove useful for smaller systems where we want to maintain audit for a particular tables
+change data streams option provided by vendr DB like change data streams in mongodb
+Use open-source technologies like Debezium that have connectors 
+  
+

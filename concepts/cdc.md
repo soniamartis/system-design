@@ -13,7 +13,7 @@ apply those incremental changes to targets(1 or more)
 - Change data streams option provided by vendor DB like change data streams in mongodb: https://www.mongodb.com/developer/languages/java/change-streams-in-java/
 
   ![image](https://github.com/soniamartis/system-design/assets/12456295/c26eaa39-d91d-496e-934c-c9af5cd74bb1)
-- Use open-source technologies like Debezium that have connectors
+- Use open-source technologies like Debezium that have connectors: https://debezium.io/documentation/reference/stable/architecture.html
 
 ### NOTE:
 Debezium mongodb connector uses mongodb change streams under the hood to read the oplog data from the primary in the replicaSet

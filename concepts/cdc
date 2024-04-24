@@ -14,5 +14,7 @@ Use open-source technologies like Debezium that have connectors
 
 NOTE:
 Debezium mongodb cnnector uses mongodb change streams under the hood to read the oplog data from the primary in the replicaSet
+
+
   
 

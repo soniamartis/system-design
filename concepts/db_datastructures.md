@@ -1,4 +1,4 @@
-# Data structures tha power databases
+# Data structures that power databases
 
 | Data structure  | Database |
 | ------------- | ------------- |

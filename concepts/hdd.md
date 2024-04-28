@@ -27,3 +27,9 @@ Time taken for the disk to spin in order to get the correct sector under the hea
 
 Time taken to transfer data from the disk surface to the host system
 Consists of internal rate(time taken to move data from disk surface to conrtoller on the drive) and external rate (time taken to move data from controller on drive to host system)
+
+### Why is sequential I/O faster than Random I/O
+In seq IO, we just have to seek to the correct track on platter once and disk will rotate to get the correct sector under the disk head. After that, we keep reading sequentially from there onwards
+In case of random I/O, we have to seek several times to different tracks on disk and then read from the sectors on those tracks
+Avg seek time for an HDD is 10 ms
+In short, sequential I/O is faster as we minimise the number of seeks

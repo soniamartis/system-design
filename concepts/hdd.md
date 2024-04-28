@@ -4,6 +4,7 @@ HDD perf is measured using 2 groups: access time and data transfer time
 - The platter is made up of 2 things, tracks and sectors
 - Every track is divided into sectors
 
+----
 
 ### Access time is broken into
 - Seek time (head moves to correct track)
@@ -21,3 +22,8 @@ Time taken for the head on the actuator arm to move to the correct track on the 
 Time taken for the disk to spin in order to get the correct sector under the head. It is measured in rpm(revolutions per minute)
   
 
+----
+## Data Transfer time aka throughput
+
+Time taken to transfer data from the disk surface to the host system
+Consists of internal rate(time taken to move data from disk surface to conrtoller on the drive) and external rate (time taken to move data from controller on drive to host system)

@@ -5,6 +5,9 @@
 - Read 1 MB sequentially from memory = 250 ps
 - Read 1 MB sequentially from network = 10 ms
 - Read 1 MB sequentially from disk = 30 ms
+- million = 10^6
+- billion = 10^9
+- trillion = 10^12
 
 ## Latency comparisons
 CPU cache reference < memory reference < compression with zippy < read 1 MB seq from memomory < round trip within same DC < disk seek < read 1 MB sequentially from network < read 1 MB sequentially from disk < round trip between DCs

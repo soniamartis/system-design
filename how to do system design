@@ -1,6 +1,6 @@
 Steps to design a system:
 1. gather functional requirements - what are the functionalities that this system must support
-2. gather non-functional requirements - availability, scalability, performance, high concurrency, latency, thoroughput
+2. gather non-functional requirements - how system should behave eg: availability, scalability, performance, high concurrency, latency, thoroughput
 3. Back of the envelope estimations - Determine QPS(Queries per second), TPS(transactions per second), read-heavy vs write-heavy 
 4. API design
 5. Data models along with choice of DB with some pseudo-code on how the services will work

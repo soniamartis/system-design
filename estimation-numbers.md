@@ -28,8 +28,8 @@ CPU cache reference < memory reference < compression with zippy < read 1 MB seq 
 | long | 8 bytes |
 | double | 8 bytes |
  
-Avg size of single document/record in database ~1 KB
-Avg size of media file ~1 MB
+- Avg size of single document/record in database ~1 KB
+- Avg size of media file ~1 MB
 
 
 ## Numbers to calculate

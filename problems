@@ -2,4 +2,5 @@ Learn following architectures for the following:
 - Distributed cache (redis)
 - Distributed database (mongo)
 - Distributed message queue (kafka)
+- Distributed key value store(redis, dynamodb etc)
 

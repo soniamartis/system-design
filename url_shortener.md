@@ -48,6 +48,28 @@ eg:
 - POST https://www.tinyurl.com/shorten?longUrl=https://en.wikipedia.org/wiki/Systems_design
 - GET https://www.tinyurl.com/abcdEfg
 
+## Data models and DB
+mapping of longUrl and shortUrl
+since we need to delete mappings older than 5 years, add timestamp to track when an antry was added
+primary key of table
+
+NoSql DB would be good fit like MongoDB as it can support large number of writes, it also supports a TTL index that can be created for auto-deletion of entries after 5 years
+Data model:
+id: UUID -> primaryKey
+longUrl: String -> unique index
+shortUrl: String -> unique index
+creationTime: Instant -> ttl index
+
+###  Logic:
+- Given a long Url check wheher a shortUrl already exists for the same
+- If yes, return shortUrl
+- If no, generate shortUrl using urlShortener service, store mapping in collection and return
+
+### Steps to generate shortened url:
+- shortUrl = encode(uniqueId(longUrl))
+- uniqueId(longUrl) does not really depend on contents of the longUrl, rather
+
+
 
 
 

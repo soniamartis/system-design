@@ -61,13 +61,23 @@ shortUrl: String -> unique index
 creationTime: Instant -> ttl index
 
 ###  Logic:
-- Given a long Url check wheher a shortUrl already exists for the same
-- If yes, return shortUrl
-- If no, generate shortUrl using urlShortener service, store mapping in collection and return
+- Given a long Url check whether longUrl already exists in DB
+- If yes, return shortUrl for that longUrl
+- If no, generate shortUrl using urlShortener service, store mapping in collection and return shortUrl
 
 ### Steps to generate shortened url:
 - shortUrl = encode(uniqueId(longUrl))
-- uniqueId(longUrl) does not really depend on contents of the longUrl, rather
+- uniqueId(longUrl) does not really depend on contents of the longUrl so as to avoid any hash collisions and we will use a distributed uniqueId generator so that the values are distinct everytime based on timestamp and machine on which the uniqueId is generated
+- We can leverage base62/base58 encoding on the generated hashValue which will be a 1:1 mapping with the hashValue and will just make the shortUrl more readable
+
+### Steps to return longUrl
+- Check if shortUrl exists in DB
+- If yes, return {statusCode:301/302, location:longUrl} as part of response headers
+- If not, return 404 not found
+
+### Optimizations for redirection:
+- send a 301 redirect so that the server is not hit everytime the user enters the shortUrl on browser, browser will handle the redirection
+- introduce a cache layer for redirection api which has the shortUrl -> longUrl mapping to avoid hitting DB everytime, tho it will introduce more issues like cache invalidation esp when the TTL index expires entries on collection. In this scenario, we can use change streams to detect updates on DB and refresh cache accordingly
 
 
 

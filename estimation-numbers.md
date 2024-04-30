@@ -8,6 +8,10 @@
 - million = 10^6
 - billion = 10^9
 - trillion = 10^12
+- 1 MB = 10^6 bytes
+- 1 GB = 10^9 bytes
+- 1 TB = 10^12 bytes
+- 1 PB = 10^15 bytes
 
 ## Latency comparisons
 CPU cache reference < memory reference < compression with zippy < read 1 MB seq from memomory < round trip within same DC < disk seek < read 1 MB sequentially from network < read 1 MB sequentially from disk < round trip between DCs
@@ -30,6 +34,7 @@ CPU cache reference < memory reference < compression with zippy < read 1 MB seq 
 | float | 4 bytes|
 | long | 8 bytes |
 | double | 8 bytes |
+| UUID | 16 bytes|
  
 - Avg size of single document/record in database ~1 KB
 - Avg size of media file ~1 MB

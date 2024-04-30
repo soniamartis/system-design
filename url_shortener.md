@@ -22,7 +22,7 @@
 ## Functional requirements
 - Given a long url, generate a short url
 - Given a short url, return the long url
-- Delete the mappings older than 5 years
+- Delete the mappings older than 5 years(purely backend functionality not exposed to users)
 
 ## Non functional requirements
 - High availability, scalability, fault tolerance
@@ -38,5 +38,16 @@
 
 - Storage estimations
 - #of urls generated in 10 years = 100 million entries * 365 days * 10 years = 365 billion records
-- 1 entry ~ 100 bytes , therefore storage size = 365 * 10^9 * 10^2 = 36.5 * 10^12 = 36.5 TB
+- 1 entry ~ 1KB , therefore storage size = 365 * 10^9 * 10^3 = 365 * 10^12 = 365 TB
+
+## System APIs
+- POST api/v1/shorten?longUrl=xyz
+- GET api/v1/{shortId}
+
+eg:
+- POST https://www.tinyurl.com/shorten?longUrl=https://en.wikipedia.org/wiki/Systems_design
+- GET https://www.tinyurl.com/abcdEfg
+
+
+
 

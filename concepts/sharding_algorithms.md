@@ -1,0 +1,4 @@
+- Range based sharding
+- Hash based
+- Consistent hashing
+- Virtual bucket hashing

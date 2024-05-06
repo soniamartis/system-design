@@ -27,6 +27,30 @@
 - Mostly used between services and not in browser-server settings
 - Receiving app closes the connection after providing a response
 
+## Websockets
+![image](https://github.com/soniamartis/system-design/assets/12456295/45410539-b4ad-4186-9767-bde21a6e0d94)
+
+- Used for two-way communication
+- client initiated
+- starts as a http request and then is upgraded to a WS protocol
+- Client sends an httprequest to the server with the upgrade header set to websocket, and server responds with a upgrade header specifying that it is now swiitching to WS protocol
+- Used for real-time web apps like gaming, chat apps, trading apps etc.
+- only protocol so far that is built for 2-way communication
+
+## HTTP Streaming
+- In request-response apis, client makes an http request and server sends a response of finite length
+- In this paradigm, server can continue to push new data in a single long-lived connection opened by client
+- Options
+  - Server sets the Transfer-encoding: chunked, which indicates to clients that data will arrive in chunks of newline-delimited strings
+  - Server sent events(SSE)
+
+## Comparison of event-driven apis
+| | Webhooks| Websockets| HTTP Streaming|
+| --|---|--|--|
+| What| event notfication via http callback| two-way streaming connection over tcp| long-lived connection over http|
+| pros| uses http protocol, easy s2s communication|2-way communication, bypasses firewalls, native browser support| can stream over simple http, native browser support, can bypass firewalls|
+|cons| doesnt work on browsers and firewalls, handling failure, security is hard| not http, need to maintain persistent connection|bidirectional communication not supported|
+| when to use| to trigger server to send real-time events| two-way real-time communication|for one-way communication over http|
 
 
 Todo this week:

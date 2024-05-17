@@ -1,0 +1,2 @@
+- Backward compatibility: new code that reads older data
+- Forward compatibility: old code that reads new data

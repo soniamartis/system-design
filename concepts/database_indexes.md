@@ -69,6 +69,51 @@
 - Range queries are not suitable, eg get all values in range 1-100000. We will have to lookup for every key in the raange 1-100000
 - hash table must fit in memory for optimal performance, using an additional on-disk hash table will slow down queries as it will result in lot of random IO
 
+
+## SSTables(Sorted string table) and LSM Trees (log-structured merge trees)
+
+### Concepts
+- data structure
+- merging and compaction
+- read/search pattern
+- write pattern
+- additional handling
+- use-case
+- limitations
+
+### Data structure
+- Uses a balanced tree like AVL/Red-black in memory and SSTable that is a sorted log on disk
+- Writes are directed to this in-memory balanced tree, once it reaches a certain size, it is then flushed to the disk in sorted order as an SSTable
+- In balanced tree, we can insert in any order and can read in sorted order
+- Bloomfilter is used in addition mentioned below
+- In SSTable, we can maintain a sparse index for efficient search instead of a hash index, since the data on sstable is sorted
+
+### Merging and compaction
+- SSTable segments are merged and compacted similar to the merge stage in a mergesort algorithm
+- If 2 segments are being merged and if key appears in both segments, then the key from the more recent segment will be picked
+- The same key does not repeat twice within the same segment
+
+### Read/search pattern
+- First seach for the key in memtable
+- If not found, then search in the most recent SSTable segment and keep doing so till u find it
+- This shows that search can slow down for keys that do not exist
+- In this scenario, we can use bloom filter which is a data structure that gives a definite no, if they key does not exist and a prababilistic yes, if it does
+
+### Write pattern
+- When a write comes in, write it to an in-memory balanced tree data structure.This structure is called a memtable
+- When memtable gets bigger than a threshold, say a few megabytes, write it out to disk as SSTable file
+- The new sstable becomes the most recent segment of the database. While the sstable is being written out to disk, writes can continue to a new memtable instance
+
+### Additional handling
+- Server crash: The most recent writes ie. data in memtable might be lost. We can handle this by using an additional log to which we write the memtable data, and it doesnt need to be sorted, we use it just to restore the memtable after a crash, everytime the memtable is flushed on disk, the log can be discarded
+
+### Use-case
+- Can perform efficient range queries as data is sorted
+- Has a high write throughput as data is written to disk sequentially
+
+
+
+
   
   
 

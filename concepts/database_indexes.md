@@ -127,6 +127,11 @@
 
 ### Read pattern
 - Keep traversing the references till u get to the page that has the data for that key
+- eg. to find data for key 251, we first start at root, 251 will lie between 200-300, then we go to the page that has keys between 200-300, then we search in that page, now 251 will lie betweeen 250 and 270, so we go to the reference of 250 till we get to the last page that has 251
+- Number of references to the child pages in one page of b-tree is called branching factor. in above example, it is 6. In reality, it can go upto several hundreds
+
+### Write pattern
+
 
   
   

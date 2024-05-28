@@ -111,8 +111,22 @@
 - Can perform efficient range queries as data is sorted
 - Has a high write throughput as data is written to disk sequentially
 
+### Limitations
+- Compaction can impact performance of ongoing reads/writes due to limited disk b/w - it can easily happen that a request needs to wait while disk finishes an expensive compaction operation
+- compaction may not be able to keep up with the # of incoming writes, resultng in large # of unmerged segments, slowing down the reads
+
+## B-Trees
+- They keep key-value pairs sorted by key
+- The DB is broken down into fixed size pages of 4KB each
+- on-disk datastructure where root has maintains keys and reference to the next set of pages
+- all intermediate nodes too maintain key and reference to next page
+- leaf pages either contain the values for the keys or references pages where value will be found
+
+![image](https://github.com/soniamartis/system-design/assets/12456295/59a59bdd-48fe-4abe-8a99-cd467dc02b59)
 
 
+### Read pattern
+- Keep traversing the references till u get to the page that has the data for that key
 
   
   

@@ -131,10 +131,28 @@
 - Number of references to the child pages in one page of b-tree is called branching factor. in above example, it is 6. In reality, it can go upto several hundreds
 
 ### Write pattern
+- To add a new key: search the btree to get to the page that encompasses the range for the key and write to that page. If the page is full, break it down to 2 half-full pages and update the parent to point to the 2 pages
+- Update value of key: search for the laf page containing the key, change value in the page, and write page back to disk
+
+![image](https://github.com/soniamartis/system-design/assets/12456295/e35358a4-c181-4cb9-a3d0-62ac82b1bac2)
 
 
+### Additional handling
+- a btree updates the pages on disk directly and does not use the append-only methodology of LSM trees, so is more susceptible to disk crashes
+- a WAL(write-ahead log) is used where every modification to the b-tree is written, then the opertaion is carried out on b-tree pages. If there is a crash, this wal is used to restore the tree
+- Concurrency control: implement light-weight locks on btree so that threads do not see an inconsistent state of the tree
   
-  
+ ### B-treee optimisations
+ - Btree searches can slow down if there are many levels in the index, resulting in more random accesss. In order to decrease the number of levels, we need to increase the # of keys in each level(branching factor). This can be done by abbreviating the keys and packing in more keys within the pages
+ - for range queries, if leaf pages are sequential, reads can be faster, but there is no such requirement that pages with nearby ranges will be nearby on disk. Attempts are made by db, to position these pages sequentially
+ - Additional pointers to the tree: sibling pages have lefta dn right pointers so that we do not have to go back to the parent to get to the next/prev sibling page
+
+| B-tree  | LSM Tree |
+| ------------- | ------------- |
+| faster for reads| faster for writes - reads can be slower due to searching in various data structures for the key|
+| results in disk fragmentation and has higher write amplification| supports better compression and has lower write amplification, suited for ssds|
+| - | compaction can impact performance of ongoing reads and writes, due to limited disk resources|
+| key-value exists in exactly 1 place giving better txn isolation using locks on range of keys| - |
 
 
 

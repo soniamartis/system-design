@@ -154,5 +154,23 @@
 | - | compaction can impact performance of ongoing reads and writes, due to limited disk resources|
 | key-value exists in exactly 1 place giving better txn isolation using locks on range of keys| - |
 
+## Other index types
+- compound index
+- clustered index
+- multi-dimensional index
+- fuzzy index
 
+### Compound index
+![image](https://github.com/soniamartis/system-design/assets/12456295/d4833b0d-2b80-47c6-a1ee-19ce469a3a92)
+
+- It consists moe than 1 column that is part of the index.
+- In above diagram,the data is first sorted by userId and if the user-id is same, then in desc order of score
+- If we search by user_id,score combination, result will be returned by index, if we search by user_id, it will still leverage the index
+- However, if we search by score, it will result in full table scan, as query is no longer covered
+
+### Clustered index
+- The value is stored in the index along with the key instead of in a separate hap file, to speed up the reads
+
+### Multi-dimensional index
+- Used mostly for locations, weather etc.
 

@@ -82,14 +82,13 @@
 - limitations
 
 ### Data structure
-- Uses a balanced tree like AVL/Red-black in memory and SSTable that is a sorted log on disk
-- Writes are directed to this in-memory balanced tree, once it reaches a certain size, it is then flushed to the disk in sorted order as an SSTable
-- In balanced tree, we can insert in any order and can read in sorted order
-- Bloomfilter is used in addition mentioned below
-- In SSTable, we can maintain a sparse index for efficient search instead of a hash index, since the data on sstable is sorted
+- Uses a balanced BST like AVL/Red-black in memory and SSTable that is a sorted log on disk
+- Writes are directed to this in-memory balanced BST , once it reaches a certain size, it is then flushed to the disk in sorted order as an SSTable
+- In balanced BST, we can insert in any order and can read in sorted order
+- Bloomfilters and sparse in-memory indexes are used in addition for read optimisations
 
 ### Merging and compaction
-- SSTable segments are merged and compacted similar to the merge stage in a mergesort algorithm
+- SSTable segments are merged and compacted similar to the merge stage in a mergesort algorithm in O(N) time
 - If 2 segments are being merged and if key appears in both segments, then the key from the more recent segment will be picked
 - The same key does not repeat twice within the same segment
 
@@ -97,10 +96,11 @@
 - First seach for the key in memtable
 - If not found, then search in the most recent SSTable segment and keep doing so till u find it
 - This shows that search can slow down for keys that do not exist
-- In this scenario, we can use bloom filter which is a data structure that gives a definite no, if they key does not exist and a prababilistic yes, if it does
+- In this scenario, we can use bloom filter which is a data structure that gives a definite no, if the key does not exist and a prababilistic yes, if it does
+- Instead of searching entire SSTable, we can also maintain a sparse index on the sstable for faster lookup, as SSTTable is sorted
 
 ### Write pattern
-- When a write comes in, write it to an in-memory balanced tree data structure.This structure is called a memtable
+- When a write comes in, write it to an in-memory balanced bst data structure. This structure is called a memtable
 - When memtable gets bigger than a threshold, say a few megabytes, write it out to disk as SSTable file
 - The new sstable becomes the most recent segment of the database. While the sstable is being written out to disk, writes can continue to a new memtable instance
 
@@ -116,9 +116,9 @@
 - compaction may not be able to keep up with the # of incoming writes, resultng in large # of unmerged segments, slowing down the reads
 
 ## B-Trees
-- They keep key-value pairs sorted by key
+- They keep key-value pairs sorted by key on disk
 - The DB is broken down into fixed size pages of 4KB each
-- on-disk datastructure where root has maintains keys and reference to the next set of pages
+- on-disk datastructure where root page maintains keys and reference to the next set of pages
 - all intermediate nodes too maintain key and reference to next page
 - leaf pages either contain the values for the keys or references pages where value will be found
 

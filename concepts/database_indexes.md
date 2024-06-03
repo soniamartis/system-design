@@ -154,6 +154,41 @@
 | - | compaction can impact performance of ongoing reads and writes, due to limited disk resources|
 | key-value exists in exactly 1 place giving better txn isolation using locks on range of keys| - |
 
+
+## Skip list
+
+![image](https://github.com/soniamartis/system-design/assets/12456295/a85d2051-ed89-43df-b4b9-00dcb0f644b2)
+
+
+### Concepts
+- data structure
+- read/search pattern
+- write pattern
+- use-case
+- limitations
+
+
+ ### Data structure
+ - Probabilisitic data structure that is built upon the general idea of a sorted linked list. The skip list uses probability to build subsequent layers of linked lists upon an original linked list. Each additional layer of links contains fewer elements, but no new elements.
+ - Skip lists are very useful when you need to be able to concurrently access your data structure. Imagine a red-black tree, an implementation of the binary search tree. If you insert a new node into the red-black tree, you might have to rebalance the entire thing, and you won't be able to access your data while this is going on. In a skip list, if you have to insert a new node, only the adjacent nodes will be affected, so you can still access large part of your data while this is happening.
+ - A skip list starts with a basic, ordered, linked list. This list is sorted, but we can't do a binary search on it because it is a linked list and we cannot index into it
+ - A new layer is added on top of this LL , where each element is added with a probability p which is 0.5 . the first node is always added
+ - Every layer added is in turn sorted
+ - Each node has 4 pointers top, left, bottom and right that is used for efficient traversal in all directions
+ - Height of the tree is O(logN)
+
+### Read/search pattern
+- Search : O(logn) and worst case is O(n). Note that searching in sorted LL is O(N), so this is clearly better
+
+### Write pattern
+- Delete/update : (logN)
+​
+### Use-case
+- Redis uses skip lists in its implementation of sorted sets
+- Discord uses skip lists to handle storing and updating the list of members in a server
+- RocksDB uses skip lists as its default Memtable implementation
+
+
 ## Other index types
 - compound index
 - clustered index
@@ -173,4 +208,6 @@
 
 ### Multi-dimensional index
 - Used mostly for locations, weather etc.
+
+
 

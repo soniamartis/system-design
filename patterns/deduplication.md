@@ -1,5 +1,6 @@
-# Deduplication patterns
+# Deduplication/Idempotency patterns
 
 
-- Database level dedupe
-- Streaming services dedpulication
+- Database
+- Kafka producer
+- Kafka consumer

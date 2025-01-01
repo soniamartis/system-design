@@ -28,3 +28,7 @@ MongoDB is a CP data store—it resolves network partitions by maintaining consi
 MongoDB is a single-master system—each replica set can have only one primary node that receives all the write operations. All other nodes in the same replica set are secondary nodes that replicate the primary node's operation log and apply it to their own data set. By default, clients also read from the primary node, but they can also specify a read preference that allows them to read from secondary nodes.
 
 When the primary node becomes unavailable, the secondary node with the most recent operation log will be elected as the new primary node. Once all the other secondary nodes catch up with the new master, the cluster becomes available again. As clients can't make any write requests during this interval, the data remains consistent across the entire network.
+
+## DynamoDB/Cassandra and CAP theorem
+They are AP datastores, ie. they will keep returning a response in the face of network partitions. The response returned by the different nodes may be stale and not consistent, but are eventually consistent, ie. once the network partition is resolved, the data will get synced on other nodes and system will eventually reach a consistent state
+

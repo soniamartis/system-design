@@ -12,7 +12,7 @@ Availability means that any client making a request for data gets a response, ev
 
 Partition tolerance
 
-A partition is a communications break within a distributed system—a lost or temporarily delayed connection between two nodes. Partition tolerance means that the cluster must continue to work despite any number of communication breakdowns between nodes in the system.
+A partition is a communications break within a distributed system—a lost or temporarily delayed connection between two nodes. Partition tolerance means that the cluster must continue to work despite any number of communication breakdowns between nodes in the system. It doesnt mean that the node is down, it just means that it is temporarily disconnected from other parts of the system
 
 ## CAP theorem NoSQL Database types
 CP database: A CP database delivers consistency and partition tolerance at the expense of availability. When a partition occurs between any two nodes, the system has to shut down the non-consistent node (i.e., make it unavailable) until the partition is resolved.
